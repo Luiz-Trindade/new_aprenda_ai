@@ -1,5 +1,5 @@
 <template>
-    <div class="topicos">
+    <v-container class="topicos fade-in">
         <h1>Lista de Tópicos</h1>
         <v-row>
             <v-col>
@@ -26,7 +26,9 @@
                 </v-btn>
             </li>
         </ul>
-    </div>
+    </v-container>
+
+    <AppFooter></AppFooter>
 </template>
 
 <script>

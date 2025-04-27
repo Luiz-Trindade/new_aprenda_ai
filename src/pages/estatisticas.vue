@@ -11,27 +11,46 @@
             </v-col>
         </v-row>
 
-        <!-- <v-row class="d-flex justify-center">
-            <v-col class="d-flex" align="center" cols="auto">
-                <apexchart type="pie" width="300" :options="chartOptions" :series="series"></apexchart>
+        <!-- Lista de questões -->
+        <v-row>
+            <v-col >
+                <div
+                    v-for="(item, index) in quizResults"
+                    :key="index"
+                    :style="{
+                        backgroundColor: item.resultado === 'correto' ? '#4CAF50' : '#F44336',
+                        padding: '10px',
+                        marginBottom: '10px',
+                        color: 'white'
+                    }"
+                >
+                    <div>
+                        <strong>Questão {{ index + 1 }}:</strong> {{ item.pergunta }}
+                    </div>
+                    <br>
+
+                    <div>
+                        <strong>Sua resposta:</strong> {{ item.resposta_aluno }}
+                    </div>
+                    <br>
+
+                    <div>
+                        <strong>Explicação:</strong> {{ item.explicacao }}
+                    </div>
+                </div>
             </v-col>
         </v-row>
-
-        <v-row class="d-flex justify-center">
-            <v-col class="d-flex" align="center" cols="auto">
-                <apexchart type="pie" width="300" :options="chartOptions" :series="series"></apexchart>
-            </v-col>
-        </v-row> -->
     </v-container>
+
+    <AppFooter></AppFooter>
 </template>
 
 <script>
 export default {
     name: "Estatisticas",
-
     data() {
         return {
-            series: [60, 30],
+            series: [0, 0],
             chartOptions: {
                 chart: {
                     width: 380,
@@ -51,13 +70,38 @@ export default {
                     }
                 }]
             },
+            quizResults: []
         }
     },
 
     mounted() {
+        this.get_correcao();
     },
 
     methods: {
+        get_correcao() {
+        const resultadoQuizJSON = localStorage.getItem('resultado_quiz');
+
+        if (resultadoQuizJSON) {
+            const resultadoQuiz = JSON.parse(resultadoQuizJSON);
+
+            let corretas = 0;
+            let erradas = 0;
+
+            resultadoQuiz.correcao.forEach(item => {
+                if (item.resultado === 'correto') {
+                    corretas++;
+                } else if (item.resultado === 'errado') {
+                    erradas++;
+                }
+            });
+
+            this.series = [corretas, erradas];
+            this.quizResults = resultadoQuiz.correcao;
+        } else {
+            console.warn('Nenhum resultado encontrado no localStorage.');
+        }
+    }
     }
 }
 </script>

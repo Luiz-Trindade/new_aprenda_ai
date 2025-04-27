@@ -6,20 +6,6 @@
             <h1>Configurações</h1>
         </v-row>
 
-        <v-form>
-            <v-text-field
-                v-model="age"
-                label="Idade"
-                type="number"
-            ></v-text-field>
-
-            <v-btn color="primary" @click="setAge">
-                <v-icon class="mr-2">mdi-account</v-icon>
-                Setar Idade
-            </v-btn>
-        </v-form>
-        <v-divider class="my-4"></v-divider>
-
         <v-row>
             <v-col>
                 <v-btn color="error" @click="resetStatistics">
@@ -35,7 +21,19 @@
                 </v-btn>
             </v-col>
         </v-row>
+
+        <!-- Botão que redireciona para "sobre" -->
+        <v-row class="mt-4">
+            <v-col>
+                <v-btn color="primary" to="/sobre">
+                    <v-icon class="mr-2">mdi-information</v-icon>
+                    Sobre
+                </v-btn>
+            </v-col>
+        </v-row>
     </v-container>
+
+    <AppFooter></AppFooter>
 </template>
 
 <script>
@@ -47,15 +45,13 @@ export default {
     },
     methods: {
         setAge() {
-            // Lógica para setar a idade (ex: salvar em um estado global, API, etc.)
             console.log("Idade definida:", this.age);
         },
         resetStatistics() {
-            // Lógica para resetar estatísticas
             console.log("Estatísticas resetadas");
+            localStorage.removeItem('resultado_quiz');
         },
         resetTopics() {
-            // Lógica para resetar tópicos
             console.log("Tópicos resetados");
             localStorage.removeItem('topicos');
         }
