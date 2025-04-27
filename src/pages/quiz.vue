@@ -1,5 +1,8 @@
 <template>
-    <v-container v-show = "conteudo_resumo.length > 0" class = "fade-in d-flex flex-column">
+    <v-container 
+        v-show="conteudo_resumo.length > 0" 
+        class="fade-in d-flex flex-column"
+    >
         <!--
             Conteúdo resumido para preparar o estudante para o quiz com 
             perguntas relacionadas ao conteúdo    

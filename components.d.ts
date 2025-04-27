@@ -9,7 +9,6 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AppFooter: typeof import('./src/components/AppFooter.vue')['default']
-    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     Initial: typeof import('./src/components/Initial.vue')['default']
     QuizOptions: typeof import('./src/components/QuizOptions.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
