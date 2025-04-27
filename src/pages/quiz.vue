@@ -29,7 +29,7 @@
         <!--
             Área de perguntas
         -->
-        <div
+        <v-container
             v-show  = "conteudo_revisado == true"
             v-for   = "(pergunta, index) in lista_de_perguntas"
             :key    = "index"
@@ -39,7 +39,7 @@
                 :alternativas   = "pergunta.alternativas"
                 @answered       = "recordAnswer"
             />
-        </div>
+        </v-container>
     </v-container>
   </template>
   
@@ -68,13 +68,22 @@
             const apiKey        = 'AIzaSyDyMncoXz4JNoJV2bRz1Df1YCoxpHRvc30';
             const model         = "gemini-2.0-flash";
             const url           = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-            const tema          = "Português para concursos";
-            const dificuldade   = "Médio";
+            const storedTopics  = JSON.parse(localStorage.getItem('topicos') || '[]');
+            const tema          = (storedTopics.length > 0)
+                ? storedTopics[Math.floor(Math.random() * storedTopics.length)]
+                : "Português para concursos";
+            const dificuldade   = "Média";
 
             const prompt = `
                 Você é um gerador de conteúdos para quiz.
-                Crie um resumo claro e objetivo sobre o tema "${tema}" para revisão de estudos.
-                Em seguida, crie 10 perguntas com 4 alternativas e a resposta correta.
+                Crie um resumo claro e objetivo sobre o tema "${tema}" para 
+                revisão de estudos antes do aluno realizar o quiz, citando os 
+                principais tópicos referentes ao tema e explicando-os para dar
+                um conhecimento prévio ao aluno.
+
+                Em seguida, crie 10 perguntas de dificuldade ${dificuldade} como se fossem perguntas
+                de um simulado de faculdade sobre o que foi abordado no resumo do tema
+                com 4 alternativas e a resposta correta.
 
                 O resultado deve ser um JSON com as chaves:
                 - "resumo"      : resumo do conteúdo

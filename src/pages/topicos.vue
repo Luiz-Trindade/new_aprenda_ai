@@ -25,7 +25,6 @@
                     Remover
                 </v-btn>
             </li>
-            <v-divider class="my-4"></v-divider>
         </ul>
     </div>
 </template>
@@ -41,15 +40,27 @@ export default {
         }
     },
     
+    created() {
+        // Carrega os tópicos armazenados, se existirem
+        const topicosSalvos = localStorage.getItem('topicos')
+        if (topicosSalvos) {
+            this.topicos = JSON.parse(topicosSalvos)
+        }
+    },
+    
     methods: {
         adicionarTopico() {
             if (this.novoTopico.trim()) {
-                this.topicos.push(this.novoTopico.trim());
-                this.novoTopico = '';
+                this.topicos.push(this.novoTopico.trim())
+                this.novoTopico = ''
+                // Atualiza o localStorage
+                localStorage.setItem('topicos', JSON.stringify(this.topicos))
             }
         },
         removerTopico(index) {
-            this.topicos.splice(index, 1);
+            this.topicos.splice(index, 1)
+            // Atualiza o localStorage
+            localStorage.setItem('topicos', JSON.stringify(this.topicos))
         }
     }
 }

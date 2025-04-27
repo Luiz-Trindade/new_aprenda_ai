@@ -57,6 +57,7 @@ export default {
         resetTopics() {
             // Lógica para resetar tópicos
             console.log("Tópicos resetados");
+            localStorage.removeItem('topicos');
         }
     }
 }
